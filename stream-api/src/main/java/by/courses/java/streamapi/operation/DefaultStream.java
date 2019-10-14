@@ -18,7 +18,7 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public Collection<UserBase> removeAllOlder(Collection<UserBase> entities, int age) {
-        return null;
+        return entities.stream().filter(elem -> elem.getAge() <= age).collect(Collectors.toList());
     }
 
     @Override
