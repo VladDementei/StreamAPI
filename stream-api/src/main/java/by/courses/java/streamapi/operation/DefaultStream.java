@@ -28,7 +28,7 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public UserBase getThirdInCollection(Collection<UserBase> entities) {
-        return null;
+        return entities.stream().skip(2).findFirst().get();
     }
 
     @Override
