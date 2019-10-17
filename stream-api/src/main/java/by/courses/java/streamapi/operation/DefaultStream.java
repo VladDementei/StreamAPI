@@ -10,10 +10,10 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public Collection<UserBase> removeWithMaxAge(Collection<UserBase> entities) {
-        UserBase max = entities.stream().max(Comparator.comparing(UserBase::getAge)).get();
-        return entities.stream()
+        UserBase max = entities.stream().max(Comparator.comparing(UserBase::getAge)).orElse(null);
+        return max != null ? entities.stream()
                 .filter(elem -> elem.getAge() < max.getAge())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()) : entities;
     }
 
     @Override
@@ -23,12 +23,12 @@ public class DefaultStream implements Operation<UserBase> {
 
     @Override
     public double getAverageAge(Collection<UserBase> entities) {
-        return entities.stream().mapToDouble(UserBase::getAge).average().getAsDouble();
+        return entities.stream().mapToDouble(UserBase::getAge).average().orElse(0.0);
     }
 
     @Override
     public UserBase getThirdInCollection(Collection<UserBase> entities) {
-        return entities.stream().skip(2).findFirst().get();
+        return entities.stream().skip(2).findFirst().orElse(null);
     }
 
     @Override
